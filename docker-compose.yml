@@ -12,7 +12,7 @@ services:
     restart: always
     command: "postgres -c max_connections=250"
     ports:
-      - "5439:5432"
+      - "5432:5432"
     networks:
       - site
     env_file:
