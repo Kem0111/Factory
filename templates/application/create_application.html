@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'fonts/linearicons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create_application.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+
+<div class="wrapper">
+    <div class="inner-w">
+            <form method="post" action="{% url 'application:app_create' %}" enctype="multipart/form-data">
+                    <h3>{{ title }}</h3>
+                    <div class="card-body">
+                        {% load user_filters %}
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ error|escape }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{ error|escape }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="input-lable">
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                    {% if field.field.required %}
+                                        <span class="required text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div class="form-holder">
+                                    <span class="{{ field.field.widget.attrs.icon_class }}"></span>
+                                    {{ field|addclass:'form-control' }}
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                </div>                             
+                            </div>
+                        {% endfor %}
+                        <div id="product-list">
+                            <div class="product">
+                                <h4>Товар 1</h4>
+                                <img id="image-preview_1" src="#" alt="Image Preview" style="display: none; width: 100px; height: auto;"/>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <div class="input-lable">
+                                            <label for="product_1">Название товара:</label>
+                                        </div>
+
+                                        <select name="product_1" id="product_1" class="form-control product-card" required>
+                                            <option value=""> Выберите продукт</option>
+                                            {% for product in products %}
+                                                <option value="{{ product.id }}"
+                                                        data-price="{{ product.product.price }}"
+                                                        data-image-url="{{ product.product.photo.url }}">{{ product }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <div class="input-lable">
+                                                
+                                                <label for="number_1">Количество</label>
+                                            </div>
+                                            <div class="form-holder">
+                                                <span class="lnr lnr-sort-amount-asc"></span>
+                                                <input type="number" name="number_1" id="number_1" class="form-control"
+                                                   required>
+                                            </div>
+                                        </div>
+                                        <div class="input-lable">
+                                            <span class="lnr lnr-picture"></span>
+                                            <label for="image_1">Образец продукта</label>
+                                        </div>
+                                        <img id="file-preview_1" src="" alt="file preview 1" style="display: none; width: 100px; height: auto; margin-top: 10px; ">
+                                        <div class="form-holder">
+                                            <label for="image_1" class="file-label">Выберите файл</label>
+                                            <input type="file" name="image_1" id="image_1" class="form-control file-input" accept=".jpg, .png" required>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btns-container">
+                        <button type="submit" class="add-product">Добавить товар</button>
+                        <button type="submit" class="execut-button submit-btn">Сохранить</button>
+                        <h4>Предварительная цена: <span id="total-price">0 руб.</span></h4>
+                    </div>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'js/application.js' %}"></script>
+    <!-- <script src="{% static 'js/fileFlow.js' %}"></script> -->
+
+
+{% endblock %}

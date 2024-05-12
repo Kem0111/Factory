@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Войти{% endblock %}
+{% block content %}
+{% load user_filters %}
+<head>
+    <link rel="stylesheet" href="{% static 'fonts/linearicons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form/style.css' %}">
+</head>
+
+    <div class="wrapper">
+        <div class="inner">
+            <div >
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ error|escape }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post"
+                      {% if action_url %}
+                      action="{% url action_url %}"
+                      {% endif %}
+                >
+                    {% csrf_token %}
+                    <h3>
+                        Авторизация
+                    </h3>
+                    {% for field in form %}
+                    <div class="form-holder">
+                        <span class="{{ field.field.widget.attrs.icon_class }}"></span>
+                        {{ field|addclass:'form-control' }}
+                    </div>
+                    {% endfor %}
+                    <div class="btns-container">
+                        <button type="submit" class="execut-button submit-btn">
+                            <span>Войти</span>
+                        </button>
+                        <a href="{% url 'users:password_reset_form' %}" class="btn btn-link">
+                            Забыли пароль?
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

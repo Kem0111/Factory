@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/product_card.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/form/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/linearicons/style.css' %}">
+</head>
+<div class="container mt-3">
+    <div class="products-wrapper">
+        <h1 class="title">Складские остатки</h1>
+        <form method="get" action="{% url 'application:product-list' %}" class="form-container form-container-dark">
+            <div class="form-holder">
+                <span class="lnr lnr-map-marker"></span>
+                <input type="text" class="form-control dark-input" placeholder="Город" name="city" value="{{ request.GET.city }}">
+            </div>
+            <div class="col">
+                    <button type="submit" class="btn submit-btn">Фильтр</button>
+            </div>
+        </form>
+    </div>
+
+    </form>
+    <div class="row mt-3">
+        {% for product in products %}
+        <div class="col-md-4 mb-4" >
+            <div class="card mb-4 box-shadow product-card-container">
+                <div class="img-container">
+                {% if product.photo %}
+                <img class="card-img-top" src="{{ product.photo.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img class="card-img-top" src="{% static 'no_image_available.png' %}" alt="No image available">
+                {% endif %}
+            </div>
+                <div class="card-body product-card">
+                    <div>
+                        <h5 class="card-title product-card-text">{{ product.name }}</h5>
+                        <p class="card-text product-card-text">{{ product.description|default:"" }}</p>
+                    </div>
+
+                    {% for stock in product.stock.all %}
+                    <div class="mt-2">
+                        <div class="product-card-text">{{ stock.city }} - {{ stock.warehouse }}</div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            {% if stock.in_stock > 0 %}
+                                <div class="badge badge-success">
+                                    Остаток: {{ stock.in_stock }} {{ product.unit }}
+                                </div>
+                            {% else %}
+                                <div class="badge badge-danger">
+                                    Под заказ
+                                </div>
+                            {% endif %}
+                            <small class="product-card-text product-card-price">{{ product.price }} руб./{{ product.unit }}</small>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="mt-2"><span class="badge badge-secondary">No stock info</span></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

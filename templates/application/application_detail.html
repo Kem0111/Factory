@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load user_filters %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/app-detail.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/product_card.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/form/style.css' %}">
+
+</head>
+    <div class="container mt-3">
+        <div class="products-wrapper">
+            <h1 class="title product-card-text">
+                Детали заказа
+            </h1>
+        </div>
+            <div class="card-body">
+                <p class="card-text product-card-text">
+                    <strong>Статус:</strong> {{ app.status }}
+                </p>
+                {% if app.product %}
+                    <p class="card-text product-card-text">
+                        <strong>Продукт/Услуга:</strong> {{ app.product }}
+                    </p>
+                {% endif %}
+                <p class="card-text product-card-text">
+                    <strong>Итоговая стоимость:</strong> {{ app.total_cost }} руб.
+                </p>
+                <p class="card-text product-card-text">
+                    <strong>ФИО покупателя:</strong> {{ app.full_name }}
+                </p>
+                <p class="card-text product-card-text">
+                    <strong>Номер телефона:</strong> {{ app.phone_number }}
+                </p>
+                <p class="card-text product-card-text">
+                    <strong>Адрес доставки:</strong> {{ app.address }}
+                </p>
+                {% if app.production_time %}
+                    <p class="card-text product-card-text">
+                        <strong>Срок изготовления до:</strong> {{ app.production_time }}
+                    </p>
+                {% endif %}
+                <p class="card-text product-card-text">
+                    <strong>Создан:</strong> {{ app.created }}
+                </p>
+                <p class="card-text product-card-text">
+                    <strong>Изменен:</strong> {{ app.updated }}
+                </p>
+            </div>
+            <h2 class="text-center product-card-text">Состав заказа:</h2>
+            <div class="scrollable-table">
+                <table class="table product-card-text">
+                    <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Количество</th>
+                        <th>Город</th>
+                        <th>Склад</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for app_product in app.applicationproduct_set.all %}
+                        <tr>
+                            <td>{{ app_product.product }}</td>
+                            <td>{{ app_product.quantity }}</td>
+                            <td>{{ app_product.warehouse }}</td>
+                            <td>{{ app_product.city }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer text-center">
+                {% if user ==  app.user and app.status == 'Создан' %}
+                    <a class="btn btn-danger" href="{% url 'application:app_delete' app_id=app.pk %}">
+                        Удалить заявку
+                    </a>
+                {% endif %}
+            </div>
+                
+    </div>
+{% endblock %}

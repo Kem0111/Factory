@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/create_application.css' %}"/>
+
+</head>
+    <table class="table app-product-container">
+        <thead>
+            <tr>
+                <th>Статус заказа</th>
+                <th>Дата заказа</th>
+                <th>Детали</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in page_obj %}
+                {% include 'application/includes/application_list.html' %}
+            {% empty %}
+                <tr><td colspan="4">Нет заявок</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include 'application/includes/paginator.html' %}
+{% endblock %}

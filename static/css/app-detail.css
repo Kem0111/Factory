@@ -1,0 +1,8 @@
+.container {
+    color: black;
+}
+
+.scrollable-table {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}

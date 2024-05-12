@@ -1,0 +1,129 @@
+.product {
+        margin-bottom: 20px;
+    }
+
+
+.card-footer {
+        margin-bottom: 20px;
+    }
+
+.footer {
+    background: #3A3331;
+    border-top: 1px solid #EF6F2E;
+}
+
+
+html, body {
+    height: 100%; /* Установка высоты всего документа и тела */
+    margin: 0; /* Удаление отступов */
+
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    color: #FFFFFF;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Установка направления основной оси страницы на вертикальную */
+}
+
+.main {
+    background: #3A3331;
+    flex: 1; /* Элемент <main> займет все доступное пространство */
+    display: flex;
+    flex-direction: column;
+}
+
+
+.h1 {    
+    font-weight: 400;
+    font-size: 60px;
+    line-height: 70px;
+}
+
+.h2 {
+    font-weight: 500;
+    font-size: 40px;
+}
+
+.p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.main-content {
+    background-color: #2E2826; /* Темный фон для основного контента */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.header, .footer {
+    background-color: #3A3331; /* Темный фон для заголовка и подвала */
+    color: #FFFFFF;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #EF6F2E; /* Граница в стиле проекта */
+    outline: none !important;
+    
+}
+
+.input-field:hover {
+    border: 2px solid #EF6F2E;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.input-field:focus {
+    border: 2px solid #EF6F2E; /* Остаётся тем же */
+    outline: none !important;
+    box-shadow: none !important;
+    appearance: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-appearance: none; /* Это свойство отменяет стандартные стили для WebKit браузеров */
+    -moz-appearance: none; /* Это свойство отменяет стандартные стили для Mozilla браузеров */
+
+}
+
+.btns-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.submit-btn {
+    background-color: #EF6F2E;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.submit-btn:hover {
+    background-color: #c65c24; /* Темнее при наведении */
+    color: inherit;
+}
+
+.policy-text {
+    color: rgba(255, 255, 255, 0.5); /* Полупрозрачный белый для текста политики */
+    font-size: 14px;
+}
+
+.app-product-container {
+    color: #FFFFFF;
+}   
