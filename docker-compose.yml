@@ -7,7 +7,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - web_app_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     restart: always
@@ -34,3 +34,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+
+volumes:
+  web_app_data:
